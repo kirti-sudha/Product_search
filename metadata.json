@@ -1,0 +1,6 @@
+{
+  "name": "Albertsons Product Search",
+  "description": "Full-Stack Product Search Web Application using React and Spring Boot.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
