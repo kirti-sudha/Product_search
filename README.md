@@ -286,7 +286,7 @@ During the development of this project, the following assumptions were made:
 
   **Product Search Functionality:**  Users can search products by name. The application dynamically filters and displays matching results.
 
-<img width="1646" height="812" alt="Screenshot 2026-06-18 063943" src="https://github.com/user-attachments/assets/a64a5045-84f2-45a9-b30d-42d048b5ef32" />
+<img width="1623" height="835" alt="Screenshot 2026-06-18 064013" src="https://github.com/user-attachments/assets/e0777e74-f783-43ef-82bf-a61769c0e8d6" />
 
    **No Match:** When a product does not exist, the application displays a user-friendly empty state.
 
