@@ -240,3 +240,16 @@ During the development of this project, the following assumptions were made:
 - **Data Persistence:** The application is designed to reset its data upon restart. A pre-configured `data.sql` file seeds the database so the application is immediately usable.
 
 ---
+
+### 3. Outputs
+<img width="1756" height="905" alt="Screenshot 2026-06-18 063906" src="https://github.com/user-attachments/assets/45679d0d-dd3f-46ce-a769-5c9ef664ec7f" />
+ **Product Catalog View:** Displays all available grocery products with category filters, pricing information, ratings, promotional badges, and add-to-cart functionality.
+
+<img width="1646" height="812" alt="Screenshot 2026-06-18 063943" src="https://github.com/user-attachments/assets/d91c8ec0-f31a-47ed-a7e1-2d6bcb28b931" />
+
+  **Product Search Functionality:**  Users can search products by name. The application dynamically filters and displays matching results.
+
+<img width="1646" height="812" alt="Screenshot 2026-06-18 063943" src="https://github.com/user-attachments/assets/a64a5045-84f2-45a9-b30d-42d048b5ef32" />
+
+   **No Match:** When a product does not exist, the application displays a user-friendly empty state.
+
