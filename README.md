@@ -1,6 +1,6 @@
 # Albertsons Product Search System
 
-A full-stack grocery product search application built as a case study for the Albertsons interview assessment. The system demonstrates a complete **Spring Boot REST API backend** connected to a **React (Vite) frontend**, showcasing real-world enterprise patterns including layered architecture, JPA/Hibernate ORM, in-memory database seeding, and a service-oriented frontend.
+A full-stack grocery product search application.The system demonstrates a complete **Spring Boot REST API backend** connected to a **React (Vite) frontend**, showcasing real-world enterprise patterns including layered architecture, JPA/Hibernate ORM, in-memory database seeding, and a service-oriented frontend.
 
 ---
 
@@ -233,20 +233,10 @@ The React frontend follows a **service-oriented architecture**:
 ## Assumptions Made
 
 During the development of this project, the following assumptions were made:
-- **In-Memory Storage:** For the scope of this case study, an H2 in-memory database is sufficient for demonstration purposes without requiring reviewers to install or configure an external database (like PostgreSQL).
-- **Security:** Authentication and authorization (e.g., Spring Security, JWT) were intentionally omitted to keep the focus strictly on the required product search and filtering functionality.
+- **In-Memory Storage:** For the scope of this case study, an H2 in-memory database is sufficient for demonstration .
+
 - **Frontend State Management:** Standard React Hooks (`useState`, `useEffect`) were deemed sufficient for the complexity of this application, avoiding over-engineering with state management libraries like Redux.
+
 - **Data Persistence:** The application is designed to reset its data upon restart. A pre-configured `data.sql` file seeds the database so the application is immediately usable.
 
 ---
-
-## AI-Assisted Development Note
-
-This project was developed with the assistance of **Antigravity (Google DeepMind)**, an agentic AI coding assistant. The AI was utilized heavily for rapid prototyping, architectural scaffolding, and bridging the integration between the Spring Boot backend and the React frontend.
-
-The AI significantly accelerated development by generating boilerplate Spring Data JPA repositories, constructing complex Java stream filtering logic, and scaffolding the Tailwind-styled React components. When the backend and frontend initially required decoupling from mock data, the AI successfully orchestrated the refactor to implement a clean Service-layer pattern in React that mirrors the Spring Boot architecture. The primary challenge encountered was a database initialization issue where `data.sql` executed before Hibernate created the schema, which was resolved by configuring the `defer-datasource-initialization` property.
-
----
-
-*Built for Albertsons Case Study Assessment — 2026*
-
