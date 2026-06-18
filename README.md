@@ -178,14 +178,7 @@ Fetch all products with optional filtering and sorting.
 | `glutenFree` | Boolean | `false` | Show only gluten-free products |
 | `sortBy` | String | `relevance` | Sort order (`relevance`, `price-low`, `price-high`, `name-az`) |
 
-* **URL Parameters**:
-  * `query` (String, Optional): Matches product name (case-insensitive substring).
-  * `department` (String, Default: `all`): Matches product category (`produce`, `dairy`, `bakery`, `meat`, `pantry`, `beverages`, `frozen`).
-  * `organic` (Boolean, Default: `false`): Restricts output to organic items.
-  * `sale` (Boolean, Default: `false`): Restricts output to products with active store discounts.
-  * `glutenFree` (Boolean, Default: `false`): Restricts output to gluten-free items.
-  * `sortBy` (String, Default: `relevance`): Dictates return sorting order (`relevance`, `price-low`, `price-high`, `name-az`).
-    * *Relevance is computed dynamically: sorting by Rating (descending) first, then by Reviews Count (descending).*
+
 
 **Example:**
 ```
