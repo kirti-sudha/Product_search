@@ -49,8 +49,8 @@ A full-stack grocery product search application.The system demonstrates a comple
                                                          └──────────────────────────────┘
 ```
 
----
-```
+
+
 1. **User Interaction**: The user performs an action in the UI (e.g., types "milk", clicks "Organic", or changes sort to "Price: Low to High").
 2. **State Syncing**: `App.jsx` handles state changes via React's `useState` hooks.
 3. **API Call Execution**: A single service class (`ProductService.js`) builds the query parameters and sends an HTTP fetch request to `/api/products?query=...`.
@@ -118,9 +118,10 @@ albt_proj/
 ├── vite.config.js                    # Vite config with API proxy
 ├── package.json                      # Node dependencies
 └── README.md                         # This file
+---
 ```
 
----
+
 
 ## Getting Started
 
