@@ -293,3 +293,24 @@ During the development of this project, the following assumptions were made:
 ---
 
 
+## AI tools used And challenges faced in the project
+
+This project was developed with help of AI tools - Claude Opus and Google Gemini 3.5 . The AI acted as a pair-programmer
+throughout the development lifecycle, accelerating development, and system integration. They contributed to the following phases:
+Generating Spring Boot initializers, REST controller endpoints, database repository interfaces, and data models with precise JPA
+mappings. Client-Side Architecture, creating a clean Service-layer structure mirroring the backend architecture. 
+Bridge Configuration: Designing the Vite configuration proxy rules to intercept front-end `/api` routing calls and transparently
+direct them to Tomcat (port 8080), avoiding CORS (Cross-Origin Resource Sharing) restrictions without complicating
+deployment environments. 
+
+Technical challenges were encountered and successfully resolved:
+1. Database Schema and Seeding Sync Order:
+Early in backend deployment, the application threw exceptions on startup when executing `data.sql` to insert the 20 initial grocery
+items. This happened because Spring Boot, by default, executed data seeding scripts before Hibernate had completed scanning
+class annotations and creating the underlying database tables. Resolution: The property `spring.jpa.defer-datasource-initialization=true` was explicitly enabled in `application.properties`. This
+tells the framework to defer database seeding until Hibernate has compiled the schema, ensuring a clean startup sequence. 2. Lombok Bytecode Incompatibility
+Resolution: A compatible JDK 17 was used. This bypassed any compiler-level bytecode conflicts, making the backend highly
+robust and compile-safe on any standard Java runtime.
+
+---
+
