@@ -50,6 +50,17 @@ A full-stack grocery product search application.The system demonstrates a comple
 ```
 
 ---
+```
+1. **User Interaction**: The user performs an action in the UI (e.g., types "milk", clicks "Organic", or changes sort to "Price: Low to High").
+2. **State Syncing**: `App.jsx` handles state changes via React's `useState` hooks.
+3. **API Call Execution**: A single service class (`ProductService.js`) builds the query parameters and sends an HTTP fetch request to `/api/products?query=...`.
+4. **Vite Proxy Redirection**: The request is captured by the Vite Dev Server and proxied to `http://localhost:8080/api/products`.
+5. **REST Controller Dispatch**: The Spring Boot `@RestController` intercepts the query and extracts the parameters.
+6. **Service Layer Processing**: The service layer coordinates the query logic, calling `ProductRepository` to search by name/department and refining the stream (applying organic, gluten-free, or sale filters and sorting.
+7. **JPA Database Retrieval**: The repository layer executes H2 SQL queries, map records to JPA `Product` entities, and transfers them back up the stack.
+8. **JSON Serialization**: The controller wraps the entities in a `ResponseEntity` which Spring Boot automatically serializes to JSON via Jackson.
+9. **UI Rendering**: The client receives the JSON payload, updates the list state, and re-renders the responsive grid with micro-animations.
+---
 
 ## Tech Stack
 
@@ -166,44 +177,76 @@ Fetch all products with optional filtering and sorting.
 | `glutenFree` | Boolean | `false` | Show only gluten-free products |
 | `sortBy` | String | `relevance` | Sort order (`relevance`, `price-low`, `price-high`, `name-az`) |
 
+* **URL Parameters**:
+  * `query` (String, Optional): Matches product name (case-insensitive substring).
+  * `department` (String, Default: `all`): Matches product category (`produce`, `dairy`, `bakery`, `meat`, `pantry`, `beverages`, `frozen`).
+  * `organic` (Boolean, Default: `false`): Restricts output to organic items.
+  * `sale` (Boolean, Default: `false`): Restricts output to products with active store discounts.
+  * `glutenFree` (Boolean, Default: `false`): Restricts output to gluten-free items.
+  * `sortBy` (String, Default: `relevance`): Dictates return sorting order (`relevance`, `price-low`, `price-high`, `name-az`).
+    * *Relevance is computed dynamically: sorting by Rating (descending) first, then by Reviews Count (descending).*
+
 **Example:**
 ```
 GET /api/products?query=milk&department=dairy&organic=true&sortBy=price-low
 ```
+* **Example JSON Response**:
+  ```json
+  [
+    {
+      "id": "prod-3",
+      "name": "Lucerne Whole Milk",
+      "brand": "LUCERNE",
+      "category": "dairy",
+      "price": 3.49,
+      "originalPrice": 4.19,
+      "rating": 4.9,
+      "reviewsCount": 844,
+      "isOrganic": false,
+      "isSale": true,
+      "size": "1 Gallon",
+      "isGlutenFree": true,
+      "imageUrl": "https://images.unsplash.com/photo-1550583724-b2692b85b150",
+      "description": "Lucerne Whole Milk, Vitamin D fortified, fine pasteurized quality.",
+      "deptId": "dairy"
+    }
+  ]
+  ```
 
 ### `GET /api/products/{id}`
-Fetch a single product by ID. Returns `404` if not found.
+Fetches details for a single product matching the path identifier.
+* **Success Response**: `200 OK` with JSON object.
+* **Error Response**: `404 Not Found` if the ID does not map to a product.
 
 ### `POST /api/products`
 Create a new product. Accepts JSON body.
 
-**Request Body:**
-```json
-{
-  "name": "Organic Avocados",
-  "brand": "O ORGANICS",
-  "category": "produce",
-  "price": 2.99,
-  "isOrganic": true,
-  "isSale": false,
-  "isGlutenFree": true,
-  "size": "3 ct bag",
-  "description": "Ripe organic Hass avocados"
-}
-```
-
-**Response:** `201 Created` with the saved product (auto-generated `id`).
-
+### `POST /api/products`
+Creates a new product record in the database.
+* **Content-Type**: `application/json`
+* **JSON Body Schema**:
+  ```json
+  {
+    "name": "Fresh Organic Blueberries",
+    "brand": "O ORGANICS",
+    "category": "produce",
+    "price": 4.99,
+    "isOrganic": true,
+    "isSale": false,
+    "isGlutenFree": true,
+    "size": "11 oz",
+    "description": "Fresh premium sweet organic blueberries."
+  }
+  ```
+* **Defaults Handled**: If `id` is empty, the system generates a unique ID on creation. If `deptId` is omitted, it auto-assigns the value from `category`. Default ratings (5.0) and reviews (1) are populated if not provided.
+* **Success Response**: `201 Created` with the saved entity payload.
 ---
 
-## Database
-
-The application uses an **H2 in-memory database** that is automatically:
-1. **Schema-created** by Hibernate based on the `Product` entity annotations (`ddl-auto=update`)
-2. **Seeded** with 20 grocery products from `data.sql` on every startup
-
-The database resets on each application restart (in-memory). Data persists only for the lifetime of the running JVM process.
-
+### Database Properties
+The backend utilizes an **H2 database engine** configured to run completely in-memory. 
+* **Persistence**: Data exists in-memory and will reset completely when the Spring Boot JVM process is restarted.
+* **Schema Generation**: Automatically managed by Hibernate ORM (`ddl-auto=update`), mapping annotations in `Product.java` directly to SQL schema fields on startup.
+* **Data Seeding**: A SQL script `data.sql` executes immediately after schema creation, populating the database with 20 grocery products across various departments (produce, dairy, bakery, meat, pantry, beverages, frozen).
 ---
 
 ## Frontend Details
@@ -225,7 +268,7 @@ The React frontend follows a **service-oriented architecture**:
 | **Service Layer** | Both stacks | Business logic isolated from controllers and UI |
 | **Singleton** | Frontend `ProductService` | Single instance exported, mirroring Spring's default bean scope |
 | **Dependency Injection** | Backend (`@Autowired`) | Spring IoC container manages bean lifecycle |
-| **DTO / Entity Mapping** | `Product.java` | JPA entity doubles as the REST response DTO |
+| **Entity Mapping** | `Product.java` | JPA entity doubles as the REST response DTO |
 | **Proxy Pattern** | Vite dev proxy | Frontend dev server transparently forwards API calls |
 
 ---
