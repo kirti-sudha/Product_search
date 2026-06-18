@@ -1,4 +1,4 @@
-# Albertsons Product Search System
+# Product Search System
 
 A full-stack grocery product search application.The system demonstrates a complete **Spring Boot REST API backend** connected to a **React (Vite) frontend**, showcasing real-world enterprise patterns including layered architecture, JPA/Hibernate ORM, in-memory database seeding, and a service-oriented frontend.
 
